@@ -8,7 +8,7 @@
 5. download [GitHub Desktop](https://desktop.github.com/)
 
 ## Usage
-1. fork this repo
+1. [fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) this repo
 2. [clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) this repo using GitHub Desktop
 3. run `npm i` from the repo's working directory
 4. copy test files into the `tests` directory
