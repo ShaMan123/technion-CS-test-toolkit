@@ -1,6 +1,6 @@
 # Technion CS Local Test Kit
 This toolkit is provided to easily manage local testing of your code.\
-It compares outputs against official output and shows you the diff.
+It compares your code's outputs against official outputs and shows you the diff.
  
 ## Installation
 1. create a recovery point on your computer
