@@ -1,7 +1,7 @@
 {
-  "name": "technion_cs_test_toolkit",
+  "name": "technion-cs-test-toolkit",
   "version": "1.0.0",
-  "description": "A test toolkit for CS",
+  "description": "A local test toolkit for CS",
   "main": "test.js",
   "directories": {
     "test": "tests"
