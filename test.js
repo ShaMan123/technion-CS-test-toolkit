@@ -37,6 +37,10 @@ function printTitle() {
 
 async function go() {
     printTitle();
+    if (ex.length === 0) {
+        console.log('\nNO exercises found');
+        return;
+    }
     const { testName } = await inquirer.prompt([
         {
             type: 'list',
