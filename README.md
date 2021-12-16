@@ -17,6 +17,6 @@
 7. run `npm test` from the repo's working directory 
 
 ## Disclaimer
-It is not guaranteed that the build script compiles your code according to the spec.
-You should submit your code to the official tests as well.
+It is not guaranteed that the build script compiles your code according to the spec.\
+You should submit your code to the official tests as well.\
 All this should do is save up time and hassel.
