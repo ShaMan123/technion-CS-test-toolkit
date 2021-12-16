@@ -1,6 +1,6 @@
 # Technion CS Local Test Kit
  
-## Installion
+## Installation
 1. create a recovery point on your computer
 2. download [node.js](https://nodejs.org/en/download/)
 3. download [git](https://git-scm.com/downloads)
