@@ -63,26 +63,34 @@ async function go() {
         if (!fs.existsSync(pathToExe)) {
             throw new Error(`Did you forget to build ${testName}? OR if you configured an automated build it failed.`);
         }
-        const failed = [];
-        const passed = _tests.map(t => {
+        const results = await Promise.all(_tests.map(async t => {
             const outName = t.replace('in', 'out');
             const desiredOutputPath = path.resolve('./tests', outName);
             const desiredOutput = fs.readFileSync(desiredOutputPath).toString();
-            const output = cp.execSync(`${pathToExe} < ${path.resolve('./tests', t)}`).toString();
+            const output = await new Promise((resolve, reject) => {
+                let data = '';
+                const child = cp.exec(`${pathToExe} < ${path.resolve('./tests', t)}`);
+                child.stdout.on('data', function (chunck) {
+                    data += chunck;
+                });
+                child.stderr.on('data', reject);
+                child.on('close', code => resolve(data));
+            });
             if (output === desiredOutput) {
-                console.log(chalk.bold(`${t} ${chalk.green('PASSED')}`));
-                return true;
+                return { testName: t, passed: true };
             } else {
-                console.log(chalk.bold(`${t} ${chalk.redBright('FAILED')}`));
-                failed.push({ testName: t, output });
-                return false;
+                return { testName: t, passed: false, output };
             }
-        });
+        }));
         if (_tests.length === 0) {
             console.log('\nNO tests found');
             return;
         }
-        console.log(passed.every(value => value) ? chalk.greenBright('\nAll tests PASSED') : chalk.redBright(`\n${failed.length} tests FAILED`));
+        const failed = results.filter(value => !value.passed);
+        results.forEach(res => {
+            console.log(chalk.bold(`${res.testName} ${res.passed ? chalk.green('PASSED') : chalk.redBright('FAILED')}`));
+        });
+        console.log(failed.length === 0 ? chalk.greenBright('\nAll tests PASSED') : chalk.redBright(`\n${failed.length} tests FAILED`));
         if (failed.length === 0) {
             return;
         }
