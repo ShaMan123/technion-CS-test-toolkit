@@ -105,6 +105,7 @@ async function go() {
         if (!displayDiff) {
             return;
         }
+        console.log(`${chalk.green('desired output (+)')}, ${chalk.red('errors (-)')}`);
         console.log(chalk.yellowBright('\nIf necessary, press enter to continue printing the diff or q to quit\n'));
         failed.forEach(({ testName: t, output }) => {
             const outName = t.replace('in', 'out');
@@ -114,7 +115,7 @@ async function go() {
             fs.writeFileSync(outputPath, output);
             console.log(chalk.underline(chalk.bold(`${t} diff\n`)));
             try {
-                cp.execSync(`git diff --no-index ${path.relative(process.cwd(), desiredOutputPath)} ${path.relative(process.cwd(), outputPath)}`, { cwd: process.cwd(), stdio: 'inherit' });
+                cp.execSync(`git diff --no-index ${path.relative(process.cwd(), outputPath)} ${path.relative(process.cwd(), desiredOutputPath)}`, { cwd: process.cwd(), stdio: 'inherit' });
             } catch (error) {
                 //console.error(error.toString())
             }
